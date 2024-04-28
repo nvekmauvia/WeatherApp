@@ -1,0 +1,6 @@
+@WeatherApp.Server_HostAddress = https://localhost:5000
+
+GET {{WeatherApp.Server_HostAddress}}/api/weather/current/-27.4705/153.0260
+Accept: application/json
+
+###
