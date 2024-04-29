@@ -142,7 +142,7 @@ const TemperatureGraph = () => {
 
     return (
         <div>
-            <Line data={chartData} options={options} />
+            <Line data={chartData} options={options} className="chart-container" />
         </div>
     );
 };
