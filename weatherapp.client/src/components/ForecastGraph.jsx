@@ -37,8 +37,8 @@ const TemperatureGraph = () => {
                 label: 'Temperature (°C)',
                 data: weeklyWeather.list.map(item => item.main.temp),
                 fill: false,
-                backgroundColor: 'rgb(255, 99, 132)',
-                borderColor: 'rgba(255, 99, 132, 0.2)',
+                backgroundColor: 'rgb(255, 205, 132)',
+                borderColor: 'rgba(255, 205, 132, 0.2)',
                 tension: 0.5,
                 datalabels: {
                     color: 'white',
@@ -133,7 +133,7 @@ const TemperatureGraph = () => {
             },
             x: {
                 title: {
-                    display: true,
+                    display: false,
                     text: 'Time of Day'
                 }
             }

@@ -1,4 +1,4 @@
-import {useEffect} from 'react';
+import { useEffect } from 'react';
 import { useState } from 'react';
 import TemperatureGraph from '../components/ForecastGraph';
 import WeatherCard from '../components/WeatherCard';
@@ -40,8 +40,12 @@ const Home = () => {
                 <p>Error: {error}</p>
             ) : (
                 <div>
-                    <WeatherCard />
-                    <TemperatureGraph />
+                    <div>
+                        <WeatherCard />
+                    </div>
+                    <div>
+                        <TemperatureGraph />
+                    </div>
                 </div>
             )}
         </div>

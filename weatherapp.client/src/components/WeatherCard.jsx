@@ -1,16 +1,44 @@
-﻿import './WeatherCard.css';  // Assuming you will style using CSS
+﻿import './WeatherCard.css';
 import { useWeather } from '../context/WeatherContext';
 
 const WeatherCard = () => {
     const { currentWeather } = useWeather();
 
+    function capitalizeWords(str) {
+        return str.split(' ')
+            .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+            .join(' ');
+    }
+
+    const getImageSrc = (description) => {
+        const imageMap = {
+            'clear sky': '/weatherIcons/day.svg',
+            'few clouds': '/weatherIcons/cloudy-day-1.svg',
+            'scattered clouds': '/weatherIcons/cloudy-day-2.svg',
+            'broken clouds': '/weatherIcons/cloudy.svg',
+            'shower rain': '/weatherIcons/rainy-1.svg',
+            'rain': '/weatherIcons/rainy-6.svg',
+            'thunderstorm': '/weatherIcons/thunder.svg',
+            'snow': '/weatherIcons/snowy-6.svg',
+            'mist': '/weatherIcons/cloudy.svg'
+        };
+
+        const normalizedDescription = description.toLowerCase();
+        return imageMap[normalizedDescription] || '/weatherIcons/cloudy-day-1.svg';
+    };
+
     return (
         <div className="weather-card">
-            <h1>{currentWeather.name}</h1>
-            <h2>{currentWeather.main.temp}°C</h2>
-            <p>Humidity: {currentWeather.main.humidity}%</p>
-            <p>Wind: {currentWeather.wind.speed} m/s</p>
-            <p>{currentWeather.weather[0].description}</p>
+            <div className="left-section">
+                <h1>{Math.round(currentWeather.main.temp)}°C</h1>
+                <img src={getImageSrc(currentWeather.weather[0].description)} alt="Weather Icon" style={{ alignSelf: 'flex-start' }} />
+            </div>
+            <div className="right-section">
+                <h2>{capitalizeWords(currentWeather.weather[0].description)}</h2>
+                <h2>{currentWeather.name}</h2>
+                <p>Humidity: {currentWeather.main.humidity}%</p>
+                <p>Wind: {currentWeather.wind.speed} m/s</p>
+            </div>
         </div>
     );
 };
