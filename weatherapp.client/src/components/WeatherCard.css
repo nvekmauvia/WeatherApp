@@ -1,10 +1,11 @@
 .weather-card {
-    width: 400px;
+    width: 90%;
+    max-width: 400px;
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
-    padding: 20px;
-    margin: 50px auto;
+    padding: 1rem;
+    margin: 20px auto;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 1);
     border-radius: 10px;
     background-color: #fff;
@@ -18,7 +19,7 @@
 }
 
 .weather-card h1 {
-    font-size: 50px;
+    font-size: 2.5rem;
     font-family: Arial;
     color: #333;
     margin: 0;
@@ -47,3 +48,35 @@
         color: #666;
         margin: 3px 0;
     }
+
+
+@media (min-width: 768px) {
+    .weather-card {
+        flex-direction: row; /* Use row layout for larger screens */
+        justify-content: space-between;
+        align-items: flex-start;
+    }
+}
+
+.left-section, .right-section {
+    width: 100%; /* Full width on smaller screens */
+}
+
+@media (min-width: 768px) {
+    .left-section, .right-section {
+        width: 50%; /* Adjust width on larger screens */
+    }
+}
+
+.weather-card img {
+    width: 100%; /* Full width */
+    height: auto; /* Adjust height automatically */
+    max-height: 200px; /* Set a max-height */
+}
+
+@media (min-width: 768px) {
+    .weather-card img {
+        width: 40%; /* Width on larger screens */
+        max-height: unset; /* Remove max-height restriction */
+    }
+}

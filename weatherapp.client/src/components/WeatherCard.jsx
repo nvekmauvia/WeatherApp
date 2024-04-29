@@ -35,7 +35,7 @@ const WeatherCard = () => {
             </div>
             <div className="right-section">
                 <h2>{capitalizeWords(currentWeather.weather[0].description)}</h2>
-                <h2>{currentWeather.name}</h2>
+                <p style={{ color: "black" }} ><b>{currentWeather.name}</b></p>
                 <p>Humidity: {currentWeather.main.humidity}%</p>
                 <p>Wind: {currentWeather.wind.speed} m/s</p>
             </div>

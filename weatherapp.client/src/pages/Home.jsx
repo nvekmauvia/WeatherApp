@@ -23,17 +23,6 @@ const Home = () => {
 
     return (
         <div>
-            <h1>OZ Weather Now</h1>
-            <form onSubmit={handleSubmit}>
-                <input
-                    type="text"
-                    value={input}
-                    onChange={e => setInput(e.target.value)}
-                    placeholder="Enter postcode"
-                />
-                <button type="submit">Get Weather</button>
-            </form>
-
             {loading ? (
                 <p>Loading... waiting on backend</p>
             ) : error ? (
@@ -43,11 +32,23 @@ const Home = () => {
                     <div>
                         <WeatherCard />
                     </div>
+                    <form onSubmit={handleSubmit}>
+                        <input
+                            type="number"
+                            inputMode="numeric"
+                            pattern="[0-9]*"
+                            value={input}
+                            onChange={e => setInput(e.target.value)}
+                            placeholder="Enter postcode"
+                        />
+                        <button type="submit">Get Weather</button>
+                    </form>
                     <div>
                         <TemperatureGraph />
                     </div>
                 </div>
             )}
+
         </div>
     );
 };
