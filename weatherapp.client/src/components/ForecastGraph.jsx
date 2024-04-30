@@ -22,40 +22,29 @@ const TemperatureGraph = () => {
     const { weeklyWeather } = useWeather();
     const [showAnnotations, setShowAnnotations] = useState(true);
     const [showDatapoints, setShowDatapoints] = useState(true);
+    const [selectedRange, setSelectedRange] = useState('1');
 
     // Button management
-    const [selectedRange, setSelectedRange] = useState('1');
-    const handleRangeChange = (range) => {
-        setSelectedRange(range);
-    };
-    const isSelected = (range) => {
-        return selectedRange === range ? 'selected' : '';
-    };
+    const handleRangeChange = range => setSelectedRange(range);
+    const isSelected = range => selectedRange === range ? 'selected' : '';
+
     const getDataSlice = (data) => {
         switch (selectedRange) {
             case '1':
-                return data.slice(0, 7);
+                return data.slice(0, 9);
             case '2':
-                return data.slice(8, 15);
+                return data.slice(8, 17);
             case '3':
-                return data.slice(16, 23);
+                return data.slice(16, 25);
             case '4':
-                return data.slice(24, 31);
+                return data.slice(24, 33);
             case '5':
-                return data.slice(32, 40);
+                return data.slice(32, 41);
             case 'all':
                 return data;
             default:
                 return data;
         }
-    };
-
-    const toggleAnnotations = () => {
-        setShowAnnotations(!showAnnotations);
-    };
-
-    const toggleDatapoints = () => {
-        setShowDatapoints(!showDatapoints);
     };
 
     function formatUnixTimestamp(unixTimestamp) {
@@ -237,59 +226,16 @@ const TemperatureGraph = () => {
     return (
         <div>
             <div className="chart-range-buttons" style={{ margin: 15 }}>
-                <button
-                    style={{ margin: 0, width: 50, }}
-                    className={isSelected('1')}
-                    onClick={() => handleRangeChange('1')}
-                >
-                    {NextFiveWeekdays[0]}
+                {['1', '2', '3', '4', '5', 'all'].map((range, index) => (
+                    <button key={range} style={{ margin: 0, width: 50 }} className={isSelected(range)} onClick={() => handleRangeChange(range)}>
+                        {range !== 'all' ? `${NextFiveWeekdays[index]}` : 'All'}
+                    </button>
+                ))}
+                <button onClick={() => setShowDatapoints(!showDatapoints)} className={showDatapoints ? 'selected' : ''}>
+                    Labels
                 </button>
-                <button
-                    style={{ margin: 0, width: 50, }}
-                    className={isSelected('2')}
-                    onClick={() => handleRangeChange('2')}
-                >
-                    {NextFiveWeekdays[1]}
-                </button>
-                <button
-                    style={{ margin: 0, width: 50, }}
-                    className={isSelected('3')}
-                    onClick={() => handleRangeChange('3')}
-                >
-                    {NextFiveWeekdays[2]}
-                </button>
-                <button
-                    style={{ margin: 0, width: 50, }}
-                    className={isSelected('4')}
-                    onClick={() => handleRangeChange('4')}
-                >
-                    {NextFiveWeekdays[3]}
-                </button>
-                <button
-                    style={{ margin: 0, width: 50, }}
-                    className={isSelected('5')}
-                    onClick={() => handleRangeChange('5')}
-                >
-                    {NextFiveWeekdays[4]}
-                </button>
-                <button
-                    style={{ margin: 0, width: 50, }}
-                    className={isSelected('all')}
-                    onClick={() => handleRangeChange('all')}
-                >
-                    All
-                </button>
-                <button
-                    onClick={toggleDatapoints}
-                    className={showDatapoints ? 'selected' : ''}
-                >
-                    {showDatapoints ? "Labels" : "Labels"}
-                </button>
-                <button
-                    onClick={toggleAnnotations}
-                    className={showAnnotations ? 'selected' : ''}
-                >
-                    {showAnnotations ? "Dividers" : "Dividers"}
+                <button onClick={() => setShowAnnotations(!showAnnotations)} className={showAnnotations ? 'selected' : ''}>
+                    Dividers
                 </button>
             </div>
             <div className="chart-wrapper">
