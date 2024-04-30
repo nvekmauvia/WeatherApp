@@ -1,27 +1,22 @@
 using System.Text.Json.Serialization;
 using WeatherApp.Server.Services;
-using Microsoft.Extensions.FileProviders;
-using System.IO;
 
 var builder = WebApplication.CreateBuilder(args);
+
 builder.WebHost.UseUrls("https://localhost:5001", "http://localhost:5000");
 
-builder.Services.AddControllers();
-builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddHttpClient();
-
 builder.Services.AddScoped<IWeatherService, WeatherService>();
 
+// CORS
+var allowedOrigins = builder.Configuration.GetSection("AllowedCorsOrigins").Get<string[]>();
 builder.Services.AddCors(options =>
 {
 	options.AddPolicy("CorsPolicy", policy =>
 	{
-		policy.WithOrigins("https://localhost:3000")
-				.AllowAnyMethod()
-				.AllowAnyHeader();
-		policy.WithOrigins("https://weathernowau.azurewebsites.net")
-				.AllowAnyMethod()
-				.AllowAnyHeader();
+		policy.WithOrigins(allowedOrigins)
+			.AllowAnyMethod()
+			.AllowAnyHeader();
 	});
 });
 
@@ -31,6 +26,7 @@ builder.Services.AddControllers().AddJsonOptions(options =>
 	options.JsonSerializerOptions.PropertyNameCaseInsensitive = true;
 });
 
+builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
@@ -50,13 +46,10 @@ else
 }
 
 app.UseHttpsRedirection();
-
+app.MapFallbackToFile("index.html");
 app.UseCors("CorsPolicy");
-
 app.UseRouting();
-
 app.UseAuthorization();
-
 app.MapControllers();
 
 app.Run();

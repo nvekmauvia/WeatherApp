@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using WeatherApp.Server.Models;
 using WeatherApp.Server.Services;
-using System.Threading.Tasks;
 
 namespace WeatherApp.Server.Controllers
 {

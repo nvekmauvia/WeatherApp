@@ -10,11 +10,13 @@ function WeatherProvider({ children }) {
     const [currentWeather, setCurrentWeather] = useState(null);
     const [weeklyWeather, setWeeklyWeather] = useState(null);
     const [loading, setLoading] = useState(true);
-    const [errors, setErrors] = useState([]);
+    const [errorMessage, setErrorMessage] = useState('');
+    const [error, setError] = useState(false);
 
     useEffect(() => {
         if (!postcode) return;
         setLoading(true);
+        setError(false);
         const apiBaseUrl = import.meta.env.VITE_API_BASE_URL;
 
         const fetchLocation = async () => {
@@ -22,7 +24,8 @@ function WeatherProvider({ children }) {
                 const locationData = await fetchWeather(apiBaseUrl, `/api/weather/location/${postcode}`);
                 setLocation(locationData);
             } catch (error) {
-                setErrors(prevErrors => [...prevErrors, error.message]);
+                setErrorMessage(`${error.message}: Invalid postcode!`);
+                setError(true);
                 setLoading(false);
             }
         };
@@ -39,14 +42,16 @@ function WeatherProvider({ children }) {
                 const currentWeatherData = await fetchWeather(apiBaseUrl, `/api/weather/current/${location.lat}/${location.lon}`);
                 setCurrentWeather(currentWeatherData);
             } catch (error) {
-                setErrors(prevErrors => [...prevErrors, error.message]);
+                setErrorMessage(`${error.message}: Invalid location!`);
+                setError(true);
             }
 
             try {
                 const weeklyWeatherData = await fetchWeather(apiBaseUrl, `/api/weather/weekly/${location.lat}/${location.lon}`);
                 setWeeklyWeather(weeklyWeatherData);
             } catch (error) {
-                setErrors(prevErrors => [...prevErrors, error.message]);
+                setErrorMessage(`${error.message}: Invalid location!`);
+                setError(true);
             }
 
             setLoading(false);
@@ -56,7 +61,7 @@ function WeatherProvider({ children }) {
     }, [location]);
 
     return (
-        <WeatherContext.Provider value={{ postcode, setPostcode, location, currentWeather, weeklyWeather, loading, errors }}>
+        <WeatherContext.Provider value={{ postcode, setPostcode, location, currentWeather, weeklyWeather, loading, errorMessage, error }}>
             {children}
         </WeatherContext.Provider>
     );
