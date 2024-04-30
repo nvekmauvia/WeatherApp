@@ -47,9 +47,12 @@ button {
     transition: border-color 0.25s;
 }
 
-    button:hover, button.selected {
-        background-color: #2a68aa;
-        border-color: #646cff;
+    button:hover {
+        background-color: #bbaa55;
+        color: white;
+    }
+    button.selected {
+        background-color: #2d5782;
         color: white;
     }
 

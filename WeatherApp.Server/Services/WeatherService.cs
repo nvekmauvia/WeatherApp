@@ -1,10 +1,11 @@
 ﻿using System.Net.Http;
 using System.Text.Json;
 using WeatherApp.Server.Models;
+using WeatherApp.Server.Models.Common;
 
 namespace WeatherApp.Server.Services
 {
-	public class WeatherService: IWeatherService
+	public class WeatherService : IWeatherService
 	{
 		private readonly HttpClient _httpClient;
 		private readonly string _apiKey;
@@ -12,7 +13,7 @@ namespace WeatherApp.Server.Services
 		public WeatherService(HttpClient httpClient, IConfiguration configuration)
 		{
 			_httpClient = httpClient;
-			_apiKey = configuration["OpenWeatherApiKey"];
+			_apiKey = configuration["OpenWeatherApiKey"] ?? throw new ArgumentNullException(nameof(_apiKey), "Missing API Key!");
 		}
 
 		public async Task<CurrentWeather> GetCurrentWeatherAsync(string lat, string lon)
@@ -22,7 +23,7 @@ namespace WeatherApp.Server.Services
 			var jsonString = await response.Content.ReadAsStringAsync();
 
 			var data = JsonSerializer.Deserialize<CurrentWeather>(jsonString);
-			return data;
+			return data ?? throw new ArgumentNullException("Current Weather data invalid!");
 		}
 
 		public async Task<WeeklyWeather> GetWeeklyWeatherAsync(string lat, string lon)
@@ -32,7 +33,7 @@ namespace WeatherApp.Server.Services
 			var jsonString = await response.Content.ReadAsStringAsync();
 
 			var data = JsonSerializer.Deserialize<WeeklyWeather>(jsonString);
-			return data;
+			return data ?? throw new ArgumentNullException("Weekly Weather data invalid!");
 		}
 
 		public async Task<Location> GetLocationAsync(int postcode)
@@ -42,7 +43,7 @@ namespace WeatherApp.Server.Services
 			var jsonString = await response.Content.ReadAsStringAsync();
 
 			var data = JsonSerializer.Deserialize<Location>(jsonString);
-			return data;
+			return data ?? throw new ArgumentNullException("Location data invalid!");
 		}
 	}
 }

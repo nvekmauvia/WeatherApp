@@ -14,9 +14,16 @@ builder.Services.AddCors(options =>
 {
 	options.AddPolicy("CorsPolicy", policy =>
 	{
-		policy.WithOrigins(allowedOrigins)
-			.AllowAnyMethod()
-			.AllowAnyHeader();
+		if (allowedOrigins != null && allowedOrigins.Length > 0)
+		{
+			policy.WithOrigins(allowedOrigins)
+				.AllowAnyMethod()
+				.AllowAnyHeader();
+		}
+		else
+		{
+			Console.WriteLine("No CORS origins configured.");
+		}
 	});
 });
 

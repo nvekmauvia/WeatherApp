@@ -1,9 +1,9 @@
-import { useEffect } from 'react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import { useWeather } from '../context/WeatherContext';
 import TemperatureGraph from '../components/ForecastGraph';
 import WeatherCard from '../components/WeatherCard';
-import { useWeather } from '../context/WeatherContext';
-import { useParams } from 'react-router-dom';
+import PostcodeForm from '../components/PostcodeForm';
 
 const Home = () => {
     const { postcode } = useParams();
@@ -18,7 +18,11 @@ const Home = () => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        setPostcode(input);
+        if (input.match(/^\d+$/)) {
+            setPostcode(input);
+        } else {
+            alert('Please enter a valid postcode.');
+        }
     };
 
     return (
@@ -28,34 +32,14 @@ const Home = () => {
             ) : error ? (
                 <div>
                     <p>{errorMessage}</p>
-                    <form onSubmit={handleSubmit}>
-                        <input
-                            type="number"
-                            inputMode="numeric"
-                            pattern="[0-9]*"
-                            value={input}
-                            onChange={e => setInput(e.target.value)}
-                            placeholder="Enter postcode"
-                        />
-                        <button type="submit">Get Weather</button>
-                    </form>
+                    <PostcodeForm input={input} setInput={setInput} handleSubmit={handleSubmit} />
                 </div>
             ) : (
                 <div>
                     <div>
                         <WeatherCard />
                     </div>
-                    <form onSubmit={handleSubmit}>
-                        <input
-                            type="number"
-                            inputMode="numeric"
-                            pattern="[0-9]*"
-                            value={input}
-                            onChange={e => setInput(e.target.value)}
-                            placeholder="Enter postcode"
-                        />
-                        <button type="submit">Get Weather</button>
-                    </form>
+                    <PostcodeForm input={input} setInput={setInput} handleSubmit={handleSubmit} />
                     <div>
                         <TemperatureGraph />
                     </div>

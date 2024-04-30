@@ -1,3 +1,4 @@
+/* eslint-disable react-refresh/only-export-components */
 import { createContext, useState, useContext, useEffect } from 'react';
 import { fetchWeather } from '../services/weatherService';
 import PropTypes from 'prop-types';
