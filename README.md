@@ -11,7 +11,7 @@ Currently only works for Australian postcodes.
 ## Technology Stack
 
 - **Backend**: ASP.net core 8.0
-- - **Frontend**: React.js
+- **Frontend**: React.js
 - **Charting**: Chart.js with chartjs-plugin-annotation for custom visualizations.
 
 ## Overview
