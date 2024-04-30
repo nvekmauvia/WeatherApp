@@ -1,8 +1,11 @@
 # Weather App
 
 ## Overview
+See live demo [here](https://weathernowau.azurewebsites.net/).
 
 Weather App providing real-time weather updates and forecasts. Displays temperature, rainfall, and cloud coverage forecasts based on specified postcode. Uses OpenWeatherAPI: (https://openweathermap.org/api).
+
+To use, please supply an OpenWeatherAPI key to appsettings.json as "OpenWeatherApiKey", and frontend urls to "AllowedCorsOrigins".
 
 Currently only works for Australian postcodes.
 
