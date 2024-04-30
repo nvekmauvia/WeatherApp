@@ -20,7 +20,7 @@ Enter a postal code in the search box and click "Get Weather" to load the weathe
 
 ## License
 
-This project is licensed under the MIT License - see the LICENSE file for details.
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ## Attribution
 
